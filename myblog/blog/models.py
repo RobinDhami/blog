@@ -7,7 +7,11 @@ class post(models.Model):
     created_at = models.DateTimeField()
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
-class Profile(models.Model):
-    image = models.ImageField()
+class Blogger(models.Model):
+    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    name = models.CharField(max_length=200,null=True)
+    phone = models.CharField(max_length=200,null=True)
+    email = models.EmailField(max_length=200,null=True)
+    image = models.ImageField(null=True,blank=True)
     bio = models.TextField()
     location = models.CharField(max_length=200,blank=True,null=True)
