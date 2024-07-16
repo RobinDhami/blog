@@ -4,26 +4,26 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-header text-center">
+    <div class="card shadow-lg">
+        <div class="card-header text-center bg-primary text-white">
             <h1>Profile Page</h1>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4 text-center">
                     {% if profile.image %}
-                        <img src="{{ profile.image.url }}" alt="{{ user.username }}'s profile image" class="rounded-circle img-fluid" />
+                        <img src="{{ profile.image.url }}" alt="{{ user.username }}'s profile image" class="rounded-circle img-fluid mb-3" style="max-width: 150px;" />
                     {% else %}
-                        <img src="https://via.placeholder.com/150" alt="No profile image" class="rounded-circle img-fluid" />
+                        <img src="https://via.placeholder.com/150" alt="No profile image" class="rounded-circle img-fluid mb-3" />
                     {% endif %}
+                    <h4 class="text-primary">{{ user.username }}</h4>
                 </div>
                 <div class="col-md-8">
-                    <h2>Username: {{ user.username }}</h2>
-                    <h2>Email: {{ user.email }}</h2>
-                    <h3>Bio:</h3>
-                    <p>{{ profile.bio }}</p>
-                    <h3>Location:</h3>
-                    <p>{{ profile.location }}</p>
+                    <h2 class="text-secondary">Personal Information</h2>
+                    <hr>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Bio:</strong> {{ profile.bio }}</p>
+                    <p><strong>Location:</strong> {{ profile.location }}</p>
                 </div>
             </div>
         </div>
