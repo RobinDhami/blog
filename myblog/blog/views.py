@@ -85,3 +85,19 @@ def register(request):
 
     else:
         return render(request, 'register.html')
+
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+
+        if not title or not content:
+            messages.error(request, 'Both title and content are required.')
+        else:
+            Post.objects.create(title=title, content=content, author=request.user)
+            messages.success(request, 'Post created successfully.')
+            return redirect('home')
+
+    return render(request, 'post.html')
