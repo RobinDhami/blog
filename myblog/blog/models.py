@@ -7,6 +7,7 @@ class post(models.Model):
     created_at = models.DateTimeField()
     author = models.ForeignKey(User,on_delete=models.CASCADE)
 
+
 class Blogger(models.Model):
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     name = models.CharField(max_length=200,null=True)
