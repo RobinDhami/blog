@@ -1,28 +1,24 @@
-<!-- templates/create_post.html -->
+<!-- templates/blog/create_post.html -->
 {% extends 'base.html' %}
 
 {% block title %}Create Post{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card shadow-lg">
-        <div class="card-header text-center bg-primary text-white">
-            <h1>Create a New Post</h1>
+    <h1 class="text-center">Create a New Post</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
         </div>
-        <div class="card-body">
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
-                </div>
-                <div class="form-group">
-                    <label for="content">Content</label>
-                    <textarea class="form-control" id="content" name="content" rows="5" placeholder="Enter content"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
         </div>
-    </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Create Post</button>
+        </div>
+    </form>
 </div>
 {% endblock %}
