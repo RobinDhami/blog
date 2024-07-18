@@ -96,8 +96,16 @@ def create_post(request):
         if not title or not content:
             messages.error(request, 'Both title and content are required.')
         else:
-            Post.objects.create(title=title, content=content, author=request.user)
+            post.objects.create(title=title, content=content, author=request.user)
             messages.success(request, 'Post created successfully.')
             return redirect('home')
 
-    return render(request, 'post.html')
+    return render(request, 'post.html',)
+
+@login_required
+def show_post(request):
+    posts = post.objects.all()
+    context = {
+        'posts': posts
+    }
+    return render(request, 'post.html', context)
