@@ -25,21 +25,20 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">Blogs.com</a>
+        <a class="navbar-brand" href="{% url 'home'%}">Blogs.com</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'home'%}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Blog</a>         
+                    <a class="nav-link" href="{% url 'post' %}">Blog</a>         
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profile'%}">Profile</a>
@@ -47,7 +46,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <a class="btn btn-outline-light my-2 my-sm-0 mr-2" href="{% url 'login' %}">Login</a>
-                <a class="btn btn-primary my-2 my-sm-0" href="#">Sign Up</a>
+                <a class="btn btn-primary my-2 my-sm-0" href="{% url 'register' %}">Sign Up</a>
             </form>
         </div>
     </nav>
