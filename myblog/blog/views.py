@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from blog.models import *
+from django.utils import timezone
+
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -96,11 +98,16 @@ def create_post(request):
         if not title or not content:
             messages.error(request, 'Both title and content are required.')
         else:
-            post.objects.create(title=title, content=content, author=request.user)
+            post.objects.create(
+                title=title,
+                content=content,
+                author=request.user,
+                created_at=timezone.now()
+            )
             messages.success(request, 'Post created successfully.')
             return redirect('home')
 
-    return render(request, 'post.html',)
+    return render(request, 'create_post.html')
 
 @login_required
 def show_post(request):
@@ -108,4 +115,4 @@ def show_post(request):
     context = {
         'posts': posts
     }
-    return render(request, 'post.html', context)
+    return render(request, 'posts.html', context)
