@@ -10,7 +10,7 @@ from django.utils import timezone
 def home(request):
     return render(request,'home.html')
 
-@login_required
+@login_required(login_url='/login/')
 def profile(request):
     user_profile = Blogger.objects.get(user=request.user)
     context={
@@ -37,6 +37,7 @@ def login_view(request):
     # If GET request or authentication failed, render the login form
     return render(request, 'login.html')
 
+@login_required(login_url='/login/')
 def logout_view(request):
     logout(request)
     messages.success(request,"Logged out Successfully")
@@ -83,7 +84,7 @@ def register(request):
         return render(request, 'register.html')
 
 
-@login_required
+@login_required(login_url='/login/')
 def create_post(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -103,10 +104,12 @@ def create_post(request):
 
     return render(request, 'create_post.html')
 
-@login_required
+@login_required(login_url='/login/')
 def show_post(request):
     posts = post.objects.all()
     context = {
-        'posts': posts
+        'posts': posts,
+        
+
     }
     return render(request, 'posts.html', context)
