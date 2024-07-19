@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from blog.models import *
 from django.utils import timezone
@@ -37,6 +37,11 @@ def login_view(request):
     # If GET request or authentication failed, render the login form
     return render(request, 'login.html')
 
+def logout_view(request):
+    logout(request)
+    messages.success(request,"Logged out Successfully")
+    return render(request,'home.html')
+
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -64,17 +69,6 @@ def register(request):
         try:
             # Create a new User object
             user = User.objects.create_user(username=username, email=email, password=password)
-
-            # Create a Blogger profile linked to the user
-            blogger = Blogger.objects.create(
-                user=user,
-                name=username,
-                email=email,
-                phone=phone_number,
-                bio=bio,
-                image=image,
-                location=location
-            )
 
             messages.success(request, 'Account created successfully.')
 
