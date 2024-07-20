@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from blog.models import *
 from django.utils import timezone
 from django.core.paginator import Paginator
-
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -53,7 +52,6 @@ def register(request):
         image = request.FILES.get('image')
         location = request.POST.get('location')
         password = request.POST.get('password')
-
         # Basic validation
         if not (username and email and phone_number and password and bio and location and image):
             messages.error(request, 'All fields are required.')
@@ -106,13 +104,20 @@ def create_post(request):
     return render(request, 'create_post.html')
 
 @login_required(login_url='/login/')
-def show_post(request):
+def page(request):
     posts = post.objects.all()
     paginator = Paginator(posts, 2)  # Show 2 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        'posts': posts,
         'page_obj':page_obj
     }
     return render(request, 'posts.html', context)
+
+@login_required(login_url='/login/')
+def post_detail(request, id):
+    post = get_object_or_404(post, id=id)
+    context = {
+        'post': post
+    }
+    return render(request, 'post_detail.html', context)
