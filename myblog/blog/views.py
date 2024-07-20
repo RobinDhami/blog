@@ -5,6 +5,7 @@ from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from blog.models import *
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 # Create your views here.
 def home(request):
@@ -107,9 +108,11 @@ def create_post(request):
 @login_required(login_url='/login/')
 def show_post(request):
     posts = post.objects.all()
+    paginator = Paginator(posts, 2)  # Show 2 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'posts': posts,
-        
-
+        'page_obj':page_obj
     }
     return render(request, 'posts.html', context)
