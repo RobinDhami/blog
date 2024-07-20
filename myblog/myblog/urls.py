@@ -26,8 +26,9 @@ urlpatterns = [
     path('profile/',profile,name='profile'),
     path('signup/',register,name='register'),
     path('create_post/',create_post,name='create_post'),
-    path('post/',show_post,name='post'),
+    path('post/',page,name='post'),
     path('logout/',logout_view,name='logout'),
+    path('post/<int:id>/', post_detail, name='post_detail'),
 
 ]
 
