@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">
-                            <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+                            <a href="">{{ post.title }}</a>
                         </h4>
                         <p class="card-text">{{ post.content|truncatewords:30 }}</p>
                         <p class="text-muted">Posted by {{ post.author.username }} on {{ post.created_at }}</p>
