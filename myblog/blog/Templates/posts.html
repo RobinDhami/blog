@@ -7,13 +7,13 @@
     <div class="row">
         {% for post in page_obj %}
             <div class="col-md-12 mb-4">
-                <div class="card">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h4 class="card-title">
                             <a href="">{{ post.title }}</a>
                         </h4>
                         <p class="card-text">{{ post.content|truncatewords:30 }}</p>
-                        <p class="text-muted">Posted by {{ post.author.username }} on {{ post.created_at }}</p>
+                        <p class="text-muted">Posted by {{ post.author.username }} on {{ post.created_at|date:"F j, Y" }}</p>
                     </div>
                 </div>
             </div>
