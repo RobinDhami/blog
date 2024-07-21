@@ -1,25 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %} <title> Login</title>{% endblock %}
+{% block title %} 
+<title>Login</title>
+{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Login</div>
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-primary text-white">Login</div>
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-4">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <p class="text-center mt-3">
+                            Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+                        </p>
                     </form>
                 </div>
             </div>
