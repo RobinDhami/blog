@@ -5,14 +5,20 @@ class post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     created_at = models.DateTimeField()
-    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 
 class Blogger(models.Model):
-    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
-    name = models.CharField(max_length=200,null=True,verbose_name='Blogger name')
-    phone = models.CharField(max_length=200,null=True,verbose_name='Phone Number')
-    email = models.EmailField(max_length=200,null=True,verbose_name='Email')
-    image = models.ImageField(null=True,blank=True,verbose_name='Profile Picture')
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, null=True, verbose_name='Blogger name')
+    phone = models.CharField(max_length=200, null=True, verbose_name='Phone Number')
+    email = models.EmailField(max_length=200, null=True, verbose_name='Email')
+    image = models.ImageField(null=True, blank=True, verbose_name='Profile Picture')
     bio = models.TextField(verbose_name='Biography')
-    location = models.CharField(max_length=200,blank=True,null=True,verbose_name='Address')
+    location = models.CharField(max_length=200, blank=True, null=True, verbose_name='Address')
+
+    def __str__(self):
+        return self.name if self.name else self.user.username
