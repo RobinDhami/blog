@@ -124,3 +124,10 @@ def post_detail(request, id):
     }
     return render(request, 'post_detail.html', context)
 
+@login_required(login_url='/login/')
+def delete_post(request,id):
+    posts = get_object_or_404(post,id=id,author=request.user)
+    posts.delete()
+    messages.success(request,'Post deleted successfully')
+    return redirect('profile')
+    
