@@ -11,6 +11,7 @@ class post(models.Model):
         return self.title
 
 
+
 class Blogger(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True, verbose_name='Blogger name')
@@ -19,6 +20,5 @@ class Blogger(models.Model):
     image = models.ImageField(null=True, blank=True, verbose_name='Profile Picture')
     bio = models.TextField(verbose_name='Biography')
     location = models.CharField(max_length=200, blank=True, null=True, verbose_name='Address')
-
     def __str__(self):
-        return self.name if self.name else self.user.username
+        return self.name if self.name else self.user.username 

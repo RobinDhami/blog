@@ -29,7 +29,6 @@ urlpatterns = [
     path('post/',page,name='post'),
     path('logout/',logout_view,name='logout'),
     path('post/<int:id>/', post_detail, name='post_detail'),
-
 ]
 
 

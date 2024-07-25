@@ -13,9 +13,11 @@ def home(request):
 @login_required(login_url='/login/')
 def profile(request):
     user_profile = Blogger.objects.get(user=request.user)
+    user_posts = post.objects.filter(author=request.user)
     context={
         'user' : request.user,
-        'profile': user_profile
+        'profile': user_profile,
+        'posts':user_posts
     }
     return render(request,'profile.html',context)
 
@@ -121,3 +123,4 @@ def post_detail(request, id):
         'post': post
     }
     return render(request, 'post_detail.html', context)
+
