@@ -1,25 +1,26 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import login,authenticate,logout
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from blog.models import *
+from blog.models import Blogger, post
 from django.utils import timezone
 from django.core.paginator import Paginator
+
 # Create your views here.
 def home(request):
-    return render(request,'home.html')
+    return render(request, 'home.html')
 
 @login_required(login_url='/login/')
 def profile(request):
     user_profile = Blogger.objects.get(user=request.user)
     user_posts = post.objects.filter(author=request.user)
-    context={
-        'user' : request.user,
+    context = {
+        'user': request.user,
         'profile': user_profile,
-        'posts':user_posts
+        'posts': user_posts
     }
-    return render(request,'profile.html',context)
+    return render(request, 'profile.html', context)
 
 def login_view(request):
     if request.method == 'POST':
@@ -42,8 +43,8 @@ def login_view(request):
 @login_required(login_url='/login/')
 def logout_view(request):
     logout(request)
-    messages.success(request,"Logged out Successfully")
-    return render(request,'home.html')
+    messages.success(request, "Logged out Successfully")
+    return render(request, 'home.html')
 
 def register(request):
     if request.method == 'POST':
@@ -54,6 +55,7 @@ def register(request):
         image = request.FILES.get('image')
         location = request.POST.get('location')
         password = request.POST.get('password')
+
         # Basic validation
         if not (username and email and phone_number and password and bio and location and image):
             messages.error(request, 'All fields are required.')
@@ -72,6 +74,17 @@ def register(request):
             # Create a new User object
             user = User.objects.create_user(username=username, email=email, password=password)
 
+            # Create Blogger profile
+            Blogger.objects.create(
+                user=user,
+                name=username,
+                phone=phone_number,
+                email=email,
+                bio=bio,
+                image=image,
+                location=location
+            )
+
             messages.success(request, 'Account created successfully.')
 
             # Redirect to profile page after successful registration
@@ -83,7 +96,6 @@ def register(request):
 
     else:
         return render(request, 'register.html')
-
 
 @login_required(login_url='/login/')
 def create_post(request):
@@ -108,26 +120,27 @@ def create_post(request):
 @login_required(login_url='/login/')
 def page(request):
     posts = post.objects.all()
-    paginator = Paginator(posts, 2)  # Show 2 contacts per page.
+    paginator = Paginator(posts, 2)  # Show 2 posts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        'page_obj':page_obj
+        'page_obj': page_obj
     }
     return render(request, 'posts.html', context)
 
 @login_required(login_url='/login/')
 def post_detail(request, id):
-    post = get_object_or_404(post, id=id)
+    post_instance = get_object_or_404(post, id=id)
     context = {
-        'post': post
+        'post': post_instance
     }
     return render(request, 'post_detail.html', context)
 
 @login_required(login_url='/login/')
-def delete_post(request,id):
-    posts = get_object_or_404(post,id=id,author=request.user)
-    posts.delete()
-    messages.success(request,'Post deleted successfully')
-    return redirect('profile')
-    
+def delete_post(request, id):
+    post_instance = get_object_or_404(post, id=id, author=request.user)
+    if request.method == 'POST':
+        post_instance.delete()
+        messages.success(request, 'Post deleted successfully')
+        return redirect('profile')
+    return render(request, 'delete_post.html', {'post': post_instance})
