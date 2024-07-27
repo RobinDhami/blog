@@ -1,0 +1,21 @@
+<!-- blog/templates/update_post.html -->
+{% extends 'base.html' %}
+
+{% block title %}Update Post{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header text-center bg-primary text-white">
+            <h1 class="display-4">Update Post</h1>
+        </div>
+        <div class="card-body p-5">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

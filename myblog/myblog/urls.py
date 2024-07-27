@@ -30,6 +30,7 @@ urlpatterns = [
     path('logout/',logout_view,name='logout'),
     path('post/<int:id>/', post_detail, name='post_detail'),
     path('delete_post/<int:id>',delete_post,name='delete_post'),
+    path('post/update/<int:id>',update_post,name='update_post')
 ]
 
 
