@@ -57,7 +57,7 @@
                 <td>{{ post.content }}</td>
                 <td>{{ post.created_at }}</td>
                 <td>
-                    <a href="" class="btn btn-sm btn-warning">Update</a>
+                    <a href="{% url 'update_post' post.id%}" class="btn btn-sm btn-warning">Update</a>
                     <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>

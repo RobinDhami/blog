@@ -144,3 +144,24 @@ def delete_post(request, id):
         messages.success(request, 'Post deleted successfully')
         return redirect('profile') 
     return render(request, 'delete_post.html', {'post': post_instance})
+
+
+from .forms import PostForm
+
+@login_required(login_url='/login/')
+def update_post(request, id):
+    post_instance = get_object_or_404(post, id=id, author=request.user)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post_instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully Updated')
+            return redirect('profile')  # Redirect to profile or appropriate page after updating
+    else:
+        form = PostForm(instance=post_instance)
+
+    context = {
+        'form': form,
+        'post': post_instance
+    }
+    return render(request, 'update_post.html', context)
