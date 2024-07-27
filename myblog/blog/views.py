@@ -142,5 +142,5 @@ def delete_post(request, id):
     if request.method == 'POST':
         post_instance.delete()
         messages.success(request, 'Post deleted successfully')
-        return redirect('profile')
+        return redirect('profile') 
     return render(request, 'delete_post.html', {'post': post_instance})
